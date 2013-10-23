@@ -1,0 +1,37 @@
+{
+  "name": "openi_data_api",
+  "description": "Handles data queries for the OPENi Cloudlet Platform",
+  "version": "0.1.0",
+  "homepage": "openi-ict.eu",
+  "author": {
+    "name": "dmccarthy",
+    "email": "dmccarthy@tssg.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.openi-ict.eu:data_api.git"
+  },
+  "bugs": {
+    "url": ""
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "openi-ict.eu/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "lib/main",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt nodeunit"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.6.4",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt": "~0.4.1"
+  },
+  "keywords": []
+}
