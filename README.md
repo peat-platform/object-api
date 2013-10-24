@@ -50,7 +50,7 @@ GET /data/echo/*var_name* Passes data from Mongrel2 to this component, on to the
 
 Sample incoming message.
 
-```json
+```javascript
 { headers:
    { PATH: '/data/echo/asdasd',
      'x-forwarded-for': '127.0.0.1',
