@@ -2,45 +2,88 @@
 
 module.exports = function(grunt) {
 
+    var tests       = 'test/**/*_test.js'
+    var build_tests = 'build/instrument/' + tests
+    var lib         = 'lib/**/*.js'
 
-	var tests       = 'test/**/*_test.js'
-	var build_tests = 'build/instrument/' + tests
-	var lib         = 'lib/**/*.js'
 
-  // Project configuration.
-  grunt.initConfig({
-    nodeunit: {
-      files: ['test/**/*_test.js'],
-    },
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc'
-      },
-      gruntfile: {
-        src: 'Gruntfile.js'
-      },
-      lib: {
-        src: ['lib/**/*.js']
-      },
-      test: {
-        src: ['test/**/*.js']
-      },
-    },
-    watch: {
-      gruntfile: {
-        files: '<%= jshint.gruntfile.src %>',
-        tasks: ['jshint:gruntfile']
-      },
-      lib: {
-        files: '<%= jshint.lib.src %>',
-        tasks: ['jshint:lib', 'nodeunit']
-      },
-      test: {
-        files: '<%= jshint.test.src %>',
-        tasks: ['jshint:test', 'nodeunit']
-      },
-    },
-  });
+    grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
+        clean: {
+            build:['build']
+        },
+        jshint: {
+            all: [lib],
+            options: grunt.file.readJSON('.jshintrc')
+        },
+        nodeunit: {
+            all: tests
+        },
+        watch : {
+            files : [ lib, tests ],
+            tasks : 'default'
+        },
+        plato: {
+            options: {
+                title: 'Mongrel2 Node Handler',
+                jshint: grunt.file.readJSON('.jshintrc')
+            },
+            metrics: {
+                files: {
+                    'build/metrics': [ lib ]
+                }
+            }
+        },
+        instrument : {
+            files : [lib],
+            options : {
+                lazy : true,
+                excludes : tests,
+                basePath : 'build/instrument/',
+                flatten : false
+            }
+        },
+        reloadTasks : {
+            rootPath : 'build/instrument/lib'
+        },
+        storeCoverage : {
+            options : {
+                dir : 'build/reports/'
+            }
+        },
+        makeReport : {
+            src : 'build/reports/**/*.json',
+            options : {
+                reporters : {
+                    'lcov'     :{dir:'build/reports/'},
+                    'cobertura':{dir:'build/reports/'}
+                },
+                print : 'detail'
+
+            }
+        },
+        coverage: {
+            options: {
+                thresholds: {
+                    'statements': 90,
+                    'branches'  : 90,
+                    'lines'     : 90,
+                    'functions' : 90
+                },
+                dir: 'reports',
+                root: 'build/'
+            }
+        },
+        required: {
+            libs: {
+                options: {
+                    install: true
+                },
+                src: [lib]
+            }
+        }
+
+    });
 
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-clean');
