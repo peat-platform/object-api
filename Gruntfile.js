@@ -103,7 +103,7 @@ module.exports = function(grunt) {
   // Default task(s).
 
   grunt.registerTask('test',     ['nodeunit']);
-  grunt.registerTask('cover',    ['clean:build', 'instrument', 'reloadTasks', 'nodeunit', 'storeCoverage', 'makeReport']);
+  grunt.registerTask('cover',    ['clean:build', 'instrument', 'nodeunit', 'storeCoverage', 'makeReport']);
   grunt.registerTask('default',  ['required',    'jshint',     'nodeunit' ]);
   grunt.registerTask('jenkins',  ['jshint',      'cover',      'coverage',    'plato']);
 
