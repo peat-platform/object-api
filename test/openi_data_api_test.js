@@ -60,22 +60,22 @@ exports['testGetAction'] = {
         test.equals(actual, "GET", "should be the HTTP GET method.")
         test.done();
     },
-    'correct format path, put method'   : function(test) {
+    'correct format path, post method'   : function(test) {
         // tests here
-        var testInputPath = "this is a put request"
+        var testInputPath = "this is a post request"
         var actual        = openi_data_api.getAction(testInputPath)
 
-        test.equals(actual, "PUT", "should be the HTTP PUT method.")
+        test.equals(actual, "POST", "should be the HTTP POST method.")
         test.done();
     },
-    'correct format path, echo method'  : function(test) {
-        // tests here
-        var testInputPath = "this is a echo request"
-        var actual        = openi_data_api.getAction(testInputPath)
+    // 'correct format path, echo method'  : function(test) {
+    //     // tests here
+    //     var testInputPath = "this is a echo request"
+    //     var actual        = openi_data_api.getAction(testInputPath)
 
-        test.equals(actual, "ECHO", "should be the HTTP ECHO method.")
-        test.done();
-    },
+    //     test.equals(actual, "ECHO", "should be the HTTP ECHO method.")
+    //     test.done();
+    // },
     'incorrect format path'  : function(test) {
         // tests here
         var testInputPath = "this is a request without a method"
