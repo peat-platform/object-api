@@ -26,7 +26,12 @@ var openi_data_api = require(base_path + '../lib/main.js');
 exports['testGetName'] = {
   setUp: function(done) {
     // setup here
-    this.testCorrectName    = "/test/name/here"
+    this.testCorrectName    = "/data/vi/data/cloudlet1"
+    this.testCorrectName1    = "/data/vi/data/cloudlet1/test1"
+    this.testCorrectName2    = "/data/vi/data/cloudlet1/test0/x"
+    this.testCorrectName3    = "/data/vi/data/cloudlet1/type/photo_type?oids=true"
+    this.testCorrectName4    = "/data/vi/data/cloudlet1/type/photo_type?oids=false&blob=false"
+    this.testCorrectName5    = "/data/vi/data/cloudlet1/type/photo_type?oids=false&blob=true"
     this.testIncorrectName  = "/wrongformat"
     done()
   },
@@ -37,12 +42,52 @@ exports['testGetName'] = {
     test.equal(actual, null, "should return null")
     test.done()
   },
-  'correct format name'  : function(test) {
+  'correct cloudlet name'  : function(test) {
     // tests here
     var actual = openi_data_api.getName(this.testCorrectName)
 
     test.notEqual(actual, null,   "should return an object")
-    test.equal   (actual, "here", "string returned not expected")
+    test.deepEqual   (actual, ["data","cloudlet1"], "string returned not expected")
+    test.done()
+  },
+  'correct object name'  : function(test) {
+    // tests here
+    var actual = openi_data_api.getName(this.testCorrectName1)
+
+    test.notEqual (actual, null,   "should return an object")
+    test.deepEqual(actual, ["data","cloudlet1","test1"], "string returned not expected")
+    test.done()
+  },
+  'correct objectField name'  : function(test) {
+    // tests here
+    var actual = openi_data_api.getName(this.testCorrectName2)
+
+    test.notEqual(actual, null,   "should return an object")
+    test.deepEqual   (actual, ["data","cloudlet1","test0","x"], "string returned not expected")
+    test.done()
+  },
+  'correct photo_type+oids name'  : function(test) {
+    // tests here
+    var actual = openi_data_api.getName(this.testCorrectName3)
+
+    test.notEqual(actual, null,   "should return an object")
+    test.deepEqual   (actual, ["data","cloudlet1","type","photo_type?oids=true"], "string returned not expected")
+    test.done()
+  },
+  'correct photo_type+data name'  : function(test) {
+    // tests here
+    var actual = openi_data_api.getName(this.testCorrectName4)
+
+    test.notEqual(actual, null,   "should return an object")
+    test.deepEqual   (actual, ["data","cloudlet1","type","photo_type?oids=false&blob=false"], "string returned not expected")
+    test.done()
+  },
+  'correct photo_type+blob name'  : function(test) {
+    // tests here
+    var actual = openi_data_api.getName(this.testCorrectName5)
+
+    test.notEqual(actual, null,   "should return an object")
+    test.deepEqual   (actual, ["data","cloudlet1","type","photo_type?oids=false&blob=true"], "string returned not expected")
     test.done()
   }
 };
