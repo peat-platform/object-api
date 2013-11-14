@@ -1,5 +1,5 @@
 {
-   "name"        : "openi_data_api",
+   "name"        : "data_api",
    "description" : "Handles data queries for the OPENi Cloudlet Platform",
    "version"     : "0.1.0",
    "homepage"    : "openi-ict.eu",
