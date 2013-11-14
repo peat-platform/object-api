@@ -3,6 +3,13 @@
 var base_path      = require('./basePath.js');
 var openi_data_api = require(base_path + '../lib/helper.js');
 
+
+openi_data_api.init({
+   'path'     : 'build/data_api',
+   'log_level': 'debug',
+   'as_json'  : false
+})
+
 /*
   ======== A Handy Little Nodeunit Reference ========
   https://github.com/caolan/nodeunit
