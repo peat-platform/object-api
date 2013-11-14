@@ -1,7 +1,7 @@
 'use strict';
 
 var base_path      = require('./basePath.js');
-var openi_data_api = require(base_path + '../lib/main.js');
+var openi_data_api = require(base_path + '../lib/helper.js');
 
 /*
   ======== A Handy Little Nodeunit Reference ========
@@ -93,40 +93,109 @@ exports['testGetName'] = {
 };
 
 exports['testGetAction'] = {
-    setUp: function(done) {
-        // setup here
-        done()
-    },
-    'correct format path, get method'   : function(test) {
-        // tests here
-        var testInputPath = "this is a get request"
-        var actual        = openi_data_api.getAction(testInputPath)
+   setUp: function(done) {
+      // setup here
+      done()
+   },
+   'correct format path, get method'   : function(test) {
+      // tests here
+      var testInputPath = "GEt"
+      var actual        = openi_data_api.getAction(testInputPath)
 
-        test.equals(actual, "GET", "should be the HTTP GET method.")
-        test.done();
-    },
-    'correct format path, post method'   : function(test) {
-        // tests here
-        var testInputPath = "this is a post request"
-        var actual        = openi_data_api.getAction(testInputPath)
+      test.equals(actual, "GET", "should be the HTTP GET method.")
+      test.done();
+   },
+   'correct format path, put method'   : function(test) {
+      // tests here
+      var testInputPath = "Put"
+      var actual        = openi_data_api.getAction(testInputPath)
 
-        test.equals(actual, "POST", "should be the HTTP POST method.")
-        test.done();
-    },
-    // 'correct format path, echo method'  : function(test) {
-    //     // tests here
-    //     var testInputPath = "this is a echo request"
-    //     var actual        = openi_data_api.getAction(testInputPath)
+      test.equals(actual, "PUT", "should be the HTTP PUT method.")
+      test.done();
+   },
+   'correct format path, post method'   : function(test) {
+      // tests here
+      var testInputPath = "poST"
+      var actual        = openi_data_api.getAction(testInputPath)
 
-    //     test.equals(actual, "ECHO", "should be the HTTP ECHO method.")
-    //     test.done();
-    // },
-    'incorrect format path'  : function(test) {
-        // tests here
-        var testInputPath = "this is a request without a method"
-        var actual        = openi_data_api.getAction(testInputPath)
+      test.equals(actual, "PUT", "should be the HTTP POST method.")
+      test.done();
+   },
+   // 'correct format path, echo method'  : function(test) {
+   //     // tests here
+   //     var testInputPath = "this is a echo request"
+   //     var actual        = openi_data_api.getAction(testInputPath)
 
-        test.equals(actual, null, "should have returned null")
-        test.done();
-    }
+   //     test.equals(actual, "ECHO", "should be the HTTP ECHO method.")
+   //     test.done();
+   // },
+   'incorrect format path'  : function(test) {
+      // tests here
+      var testInputPath = "this is a request without a method"
+      var actual        = openi_data_api.getAction(testInputPath)
+
+      test.equals(actual, null, "should have returned null")
+      test.done();
+   }
+}
+
+
+exports['testPassThrough'] = {
+   'correct format'   : function(test) {
+      // tests here
+      var testInput     = {
+         action : 'put',
+         uuid   : '123123',
+         connId : '345345345',
+         body   : 'body text'
+      }
+      var actual        = openi_data_api.passThrough(testInput);
+
+      test.equals(actual.status, 200, "should be 200")
+      test.equals(actual.body, '{"action":"put","uuid":"123123","connId":"345345345","body":"body text"}', "should match")
+      test.equals(actual.headers['Content-Type'], 'application/json; charset=utf-8', "should match")
+      test.done();
+   },
+   'correct format path, post method'   : function(test) {
+
+      var testInput     = {
+         action : false,
+         uuid   : '123123',
+         connId : '345345345',
+         body   : 'body text'
+      }
+      var actual        = openi_data_api.passThrough(testInput);
+
+      console.log(actual)
+
+      test.equals(actual, null, "should be null.")
+      test.done();
+   }
+}
+
+
+exports['testProcessMongrel2'] = {
+   'correct format'   : function(test) {
+      // tests here
+      var testInput     = {
+         action  : 'put',
+         uuid    : '123123',
+         connId  : '345345345',
+         path    : '/v1/data/get/test',
+         headers : {
+            QUERY  : 'a=b&c=d',
+            METHOD : 'PUT'
+         }
+      }
+      var actual        = openi_data_api.processMongrel2Message(testInput);
+
+
+      test.equals(actual.uuid,    '123123',    "should be '123123'")
+      test.equals(actual.connId,  '345345345', "should be 345345345")
+      test.equals(actual.action,  'PUT',       "should be PUT")
+      test.equals(actual.name[0], 'get',       "should be get")
+      test.equals(actual.name[1], 'test',      "should be test")
+      test.equals(actual.query,   'a=b&c=d',   "should be a=b&c=d")
+      test.done();
+   }
 }
