@@ -41,9 +41,10 @@ How are we gonna document the APIs???? I'm not sure if markdown is good enough.
 Right now the following http actions are supported.
 
 ```
-POST/data/put/*var_name* with a JSON body. Simply saves the JSON body in the couch database with the given *var_name* and returns the result.
-GET /data/get/*var_name* Retrieves the JSON object for the given *var_name*.
-GET /data/echo/*var_name* Passes data from Mongrel2 to this component, on to the dao component and back. Illustrates the multiple paths that messages can take.
+POST/data/put/*var_name* with a JSON body.              Simply saves the JSON body in the couch database with the given *var_name* and returns the result.
+GET /v1/data/*cloudlet_id*/*object_name*                Retrieves the JSON object *object_name* within *cloudlet_id*.
+GET /v1/data/*cloudlet_id*/*object_name/*var_name*      Retrieves the JSON value for the given *var_name* from *object_name* within cloudlet_id*.
+GET /v1/data/*cloudlet_id*/type/*data_type*?*query*     Retrieves the JSON Array of Objects that match *query* of type *data_type* in *cloudlet_id*.
 ```
 
 **Alternative documentation**
@@ -51,19 +52,20 @@ GET /data/echo/*var_name* Passes data from Mongrel2 to this component, on to the
 Sample incoming message.
 
 ```javascript
-{ headers:
-   { PATH: '/data/echo/asdasd',
-     'x-forwarded-for': '127.0.0.1',
-     'accept-language': 'en-GB,en-US;q=0.8,en;q=0.6',
-     'accept-encoding': 'gzip,deflate,sdch',
-     connection: 'keep-alive',
-     accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-     'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36',
-     host: 'localhost',
-     METHOD: 'GET',
-     VERSION: 'HTTP/1.1',
-     URI: '/data/echo/asdasd',
-     PATTERN: '/data' },
+{ Headers: {
+    "PATH": "/data/v1/data/000003/test1",
+    "x-forwarded-for": "127.0.0.1",
+    "content-type": "application/json",
+    "accept-language": "en-US,en;q=0.8,en-GB;q=0.6",
+    "accept-encoding": "gzip,deflate,sdch",
+    "connection": "keep-alive",
+    "accept": "*/*",
+    "user-agent": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36",
+    "host": "localhost",
+    "METHOD": "GET",
+    "VERSION": "HTTP/1.1",
+    "URI": "/data/v1/data/000003/test1",
+    "PATTERN": "/data"},
   body: '',
   uuid: '81b7114c-534c-4107-9f17-b317cfd59f62',
   connId: '21',
@@ -87,3 +89,4 @@ Sample incoming message.
 ## License
 Copyright (c) 2013
 Licensed under the MIT license.
+
