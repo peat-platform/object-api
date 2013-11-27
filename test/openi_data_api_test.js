@@ -44,57 +44,57 @@ exports['testGetName'] = {
   },
   'incorrect format name': function(test) {
     // tests here
-    var actual = openi_data_api.getName(this.testIncorrectName)
+    var actual = openi_data_api.getObject(this.testIncorrectName)
 
     test.equal(actual, null, "should return null")
     test.done()
   },
   'correct cloudlet name'  : function(test) {
     // tests here
-    var actual = openi_data_api.getName(this.testCorrectName)
+    var actual = openi_data_api.getObject(this.testCorrectName)
 
     test.notEqual(actual, null,   "should return an object")
-    test.deepEqual   (actual, ["data","cloudlet1"], "string returned not expected")
+    test.deepEqual   (actual, "cloudlet1", "string returned not expected")
     test.done()
   },
   'correct object name'  : function(test) {
     // tests here
-    var actual = openi_data_api.getName(this.testCorrectName1)
+    var actual = openi_data_api.getObject(this.testCorrectName1)
 
     test.notEqual (actual, null,   "should return an object")
-    test.deepEqual(actual, ["data","cloudlet1","test1"], "string returned not expected")
+    test.deepEqual(actual, "cloudlet1", "string returned not expected")
     test.done()
   },
   'correct objectField name'  : function(test) {
     // tests here
-    var actual = openi_data_api.getName(this.testCorrectName2)
+    var actual = openi_data_api.getObject(this.testCorrectName2)
 
     test.notEqual(actual, null,   "should return an object")
-    test.deepEqual   (actual, ["data","cloudlet1","test0","x"], "string returned not expected")
+    test.deepEqual   (actual, "cloudlet1", "string returned not expected")
     test.done()
   },
   'correct photo_type+oids name'  : function(test) {
     // tests here
-    var actual = openi_data_api.getName(this.testCorrectName3)
+    var actual = openi_data_api.getObject(this.testCorrectName3)
 
     test.notEqual(actual, null,   "should return an object")
-    test.deepEqual   (actual, ["data","cloudlet1","type","photo_type?oids=true"], "string returned not expected")
+    test.deepEqual   (actual, "cloudlet1" , "string returned not expected")
     test.done()
   },
   'correct photo_type+data name'  : function(test) {
     // tests here
-    var actual = openi_data_api.getName(this.testCorrectName4)
+    var actual = openi_data_api.getObject(this.testCorrectName4)
 
     test.notEqual(actual, null,   "should return an object")
-    test.deepEqual   (actual, ["data","cloudlet1","type","photo_type?oids=false&blob=false"], "string returned not expected")
+    test.deepEqual   (actual, "cloudlet1", "string returned not expected")
     test.done()
   },
   'correct photo_type+blob name'  : function(test) {
     // tests here
-    var actual = openi_data_api.getName(this.testCorrectName5)
+    var actual = openi_data_api.getObject(this.testCorrectName5)
 
     test.notEqual(actual, null,   "should return an object")
-    test.deepEqual   (actual, ["data","cloudlet1","type","photo_type?oids=false&blob=true"], "string returned not expected")
+    test.deepEqual   (actual, "cloudlet1", "string returned not expected")
     test.done()
   }
 };
@@ -182,6 +182,7 @@ exports['testPassThrough'] = {
 
 
 exports['testProcessMongrel2'] = {
+
    'correct format'   : function(test) {
       // tests here
       var testInput     = {
@@ -194,15 +195,16 @@ exports['testProcessMongrel2'] = {
             METHOD : 'PUT'
          }
       }
-      var actual        = openi_data_api.processMongrel2Message(testInput);
+
+      var actual = openi_data_api.processMongrel2Message(testInput);
 
 
-      test.equals(actual.uuid,    '123123',    "should be '123123'")
-      test.equals(actual.connId,  '345345345', "should be 345345345")
-      test.equals(actual.action,  'PUT',       "should be PUT")
-      test.equals(actual.name[0], 'get',       "should be get")
-      test.equals(actual.name[1], 'test',      "should be test")
-      test.equals(actual.query,   'a=b&c=d',   "should be a=b&c=d")
+      test.equals(actual.uuid,        '123123',    "should be '123123'")
+      test.equals(actual.connId,      '345345345', "should be 345345345")
+      test.equals(actual.action,      'PUT',       "should be PUT")
+      test.equals(actual.cloudlet,    'get',       "should be get")
+      test.equals(actual.object_name, 'test',      "should be test")
+      test.equals(actual.query,       'a=b&c=d',   "should be a=b&c=d")
       test.done();
    }
 }
