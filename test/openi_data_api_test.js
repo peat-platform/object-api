@@ -1,10 +1,10 @@
 'use strict';
 
-var base_path      = require('./basePath.js');
-var openi_data_api = require(base_path + '../lib/helper.js');
+var base_path          = require('./basePath.js');
+var openi_cloudlet_api = require(base_path + '../lib/helper.js');
 
 
-openi_data_api.init({
+openi_cloudlet_api.init({
    'path'     : 'build/data_api',
    'log_level': 'debug',
    'as_json'  : false
@@ -30,181 +30,126 @@ openi_data_api.init({
     test.ifError(value)
 */
 
-exports['testGetName'] = {
-  setUp: function(done) {
-    // setup here
-    this.testCorrectName    = "/data/vi/data/cloudlet1"
-    this.testCorrectName1    = "/data/vi/data/cloudlet1/test1"
-    this.testCorrectName2    = "/data/vi/data/cloudlet1/test0/x"
-    this.testCorrectName3    = "/data/vi/data/cloudlet1/type/photo_type?oids=true"
-    this.testCorrectName4    = "/data/vi/data/cloudlet1/type/photo_type?oids=false&blob=false"
-    this.testCorrectName5    = "/data/vi/data/cloudlet1/type/photo_type?oids=false&blob=true"
-    this.testIncorrectName  = "/wrongformat"
-    done()
-  },
-  'incorrect format name': function(test) {
-    // tests here
-    var actual = openi_data_api.getObject(this.testIncorrectName)
-
-    test.equal(actual, null, "should return null")
-    test.done()
-  },
-  'correct cloudlet name'  : function(test) {
-    // tests here
-    var actual = openi_data_api.getObject(this.testCorrectName)
-
-    test.notEqual(actual, null,   "should return an object")
-    test.deepEqual   (actual, "cloudlet1", "string returned not expected")
-    test.done()
-  },
-  'correct object name'  : function(test) {
-    // tests here
-    var actual = openi_data_api.getObject(this.testCorrectName1)
-
-    test.notEqual (actual, null,   "should return an object")
-    test.deepEqual(actual, "cloudlet1", "string returned not expected")
-    test.done()
-  },
-  'correct objectField name'  : function(test) {
-    // tests here
-    var actual = openi_data_api.getObject(this.testCorrectName2)
-
-    test.notEqual(actual, null,   "should return an object")
-    test.deepEqual   (actual, "cloudlet1", "string returned not expected")
-    test.done()
-  },
-  'correct photo_type+oids name'  : function(test) {
-    // tests here
-    var actual = openi_data_api.getObject(this.testCorrectName3)
-
-    test.notEqual(actual, null,   "should return an object")
-    test.deepEqual   (actual, "cloudlet1" , "string returned not expected")
-    test.done()
-  },
-  'correct photo_type+data name'  : function(test) {
-    // tests here
-    var actual = openi_data_api.getObject(this.testCorrectName4)
-
-    test.notEqual(actual, null,   "should return an object")
-    test.deepEqual   (actual, "cloudlet1", "string returned not expected")
-    test.done()
-  },
-  'correct photo_type+blob name'  : function(test) {
-    // tests here
-    var actual = openi_data_api.getObject(this.testCorrectName5)
-
-    test.notEqual(actual, null,   "should return an object")
-    test.deepEqual   (actual, "cloudlet1", "string returned not expected")
-    test.done()
-  }
-};
-
-exports['testGetAction'] = {
-   setUp: function(done) {
-      // setup here
-      done()
-   },
-   'correct format path, get method'   : function(test) {
-      // tests here
-      var testInputPath = "GEt"
-      var actual        = openi_data_api.getAction(testInputPath)
-
-      test.equals(actual, "GET", "should be the HTTP GET method.")
-      test.done();
-   },
-   'correct format path, put method'   : function(test) {
-      // tests here
-      var testInputPath = "Put"
-      var actual        = openi_data_api.getAction(testInputPath)
-
-      test.equals(actual, "PUT", "should be the HTTP PUT method.")
-      test.done();
-   },
-   'correct format path, post method'   : function(test) {
-      // tests here
-      var testInputPath = "poST"
-      var actual        = openi_data_api.getAction(testInputPath)
-
-      test.equals(actual, "PUT", "should be the HTTP POST method.")
-      test.done();
-   },
-   // 'correct format path, echo method'  : function(test) {
-   //     // tests here
-   //     var testInputPath = "this is a echo request"
-   //     var actual        = openi_data_api.getAction(testInputPath)
-
-   //     test.equals(actual, "ECHO", "should be the HTTP ECHO method.")
-   //     test.done();
-   // },
-   'incorrect format path'  : function(test) {
-      // tests here
-      var testInputPath = "this is a request without a method"
-      var actual        = openi_data_api.getAction(testInputPath)
-
-      test.equals(actual, null, "should have returned null")
-      test.done();
-   }
-}
-
-
-exports['testPassThrough'] = {
-   'correct format'   : function(test) {
-      // tests here
-      var testInput     = {
-         action : 'put',
-         uuid   : '123123',
-         connId : '345345345',
-         body   : 'body text'
-      }
-      var actual        = openi_data_api.passThrough(testInput);
-
-      test.equals(actual.status, 200, "should be 200")
-      test.equals(actual.body, '{"action":"put","uuid":"123123","connId":"345345345","body":"body text"}', "should match")
-      test.equals(actual.headers['Content-Type'], 'application/json; charset=utf-8', "should match")
-      test.done();
-   },
-   'correct format path, post method'   : function(test) {
-
-      var testInput     = {
-         action : false,
-         uuid   : '123123',
-         connId : '345345345',
-         body   : 'body text'
-      }
-      var actual        = openi_data_api.passThrough(testInput);
-
-      console.log(actual)
-
-      test.equals(actual, null, "should be null.")
-      test.done();
-   }
-}
 
 
 exports['testProcessMongrel2'] = {
 
-   'correct format'   : function(test) {
+   'create Cloudlet'   : function(test) {
       // tests here
       var testInput     = {
-         action  : 'put',
          uuid    : '123123',
          connId  : '345345345',
-         path    : '/v1/data/get/test',
+         path    : '/api/v1/cloudlets',
          headers : {
             QUERY  : 'a=b&c=d',
-            METHOD : 'PUT'
+            METHOD : 'POST'
+         },
+         body    : {
+            "alias": "dmc",
+            "username": "dm@tssg.org"
+         },
+         json    : {
+            "alias": "dmc",
+            "username": "dm@tssg.org"
          }
       }
 
-      var actual = openi_data_api.processMongrel2Message(testInput);
+      var actual = openi_cloudlet_api.processMongrel2Message(testInput);
+
+      test.equals(actual.action,                'CREATE',                                    "should be 'CREATE'"     )
+      test.equals(actual.object_data.alias,     'dmc',                                       "should be dmc"          )
+      test.equals(actual.object_data.username,  'dm@tssg.org',                               "should be dm@tssg.org"  )
+      test.equals(actual.mongrel_resp.value,    true,                                        "should be true"         )
+      test.equals(actual.clients[0].uuid,       '123123',                                    "should be 123123"       )
+      test.equals(actual.clients[0].connId,     '345345345',                                 "should be 345345345"    )
+      test.done();
+   },
+   'delete Cloudlet'   : function(test) {
+      // tests here
+      var testInput     = {
+         uuid    : '123123',
+         connId  : '345345345',
+         path    : '/api/v1/cloudlets/asdasdasdasdasd',
+         headers : {
+            QUERY  : 'a=b&c=d',
+            METHOD : 'DELETE'
+         },
+         body    : {
+            "alias": "dmc",
+            "username": "dm@tssg.org"
+         },
+         json    : {
+            "alias": "dmc",
+            "username": "dm@tssg.org"
+         }
+      }
+
+      var actual = openi_cloudlet_api.processMongrel2Message(testInput);
+
+      test.equals(actual.action,             'DELETE',                                    "should be 'DELETE'"        )
+      test.equals(actual.cloudlet,           'asdasdasdasdasd',                           "should be asdasdasdasdasd" )
+      test.deepEqual(actual.object_data,     {},                                          "should be empty object"    )
+      test.deepEqual(actual.mongrel_resp,    { value: true, cloudletId: 'asdasdasdasdasd' }, "should be { value: true, cloudletId: 'asdasdasdasdasd' }")
+      test.equals(actual.clients[0].uuid,    '123123',                                    "should be 123123"          )
+      test.equals(actual.clients[0].connId,  '345345345',                                 "should be 345345345"       )
+      test.done();
+   },
+   'export Cloudlet'   : function(test) {
+      // tests here
+      var testInput     = {
+         uuid    : '123123',
+         connId  : '345345345',
+         path    : '/api/v1/cloudlets/234234234234',
+         headers : {
+            QUERY  : 'a=b&c=d',
+            METHOD : 'GET'
+         },
+         body    : {
+            "alias": "dmc",
+            "username": "dm@tssg.org"
+         },
+         json    : {
+            "alias": "dmc",
+            "username": "dm@tssg.org"
+         }
+      }
 
 
-      test.equals(actual.uuid,        '123123',    "should be '123123'")
-      test.equals(actual.connId,      '345345345', "should be 345345345")
-      test.equals(actual.action,      'PUT',       "should be PUT")
-      test.equals(actual.cloudlet,    'get',       "should be get")
-      test.equals(actual.object_name, 'test',      "should be test")
-      test.equals(actual.query,       'a=b&c=d',   "should be a=b&c=d")
+
+      var actual = openi_cloudlet_api.processMongrel2Message(testInput);
+
+      test.equals(actual.action,             'FETCH',                                     "should be 'FETCH'"      )
+      test.equals(actual.cloudlet,           '234234234234',                              "should be 345345345"    )
+      test.deepEqual(actual.object_name,        {},                                          "should be Empty Object" )
+      test.deepEqual(actual.mongrel_resp,       { value: true, cloudletId: '234234234234' }, "should be { value: true, cloudletId: '234234234234' }")
+      test.equals(actual.clients[0].uuid,    '123123',                                    "should be 123123"       )
+      test.equals(actual.clients[0].connId,  '345345345',                                 "should be 345345345"    )
+      test.done();
+   },
+   'Malformed'   : function(test) {
+      // tests here
+      var testInput     = {
+         uuid    : '123123',
+         connId  : '345345345',
+         path    : '/api/v1/cloudlets/234234234234',
+         headers : {
+            QUERY  : 'a=b&c=d',
+            METHOD : 'AAA'
+         },
+         body    : {
+            "alias": "dmc",
+            "username": "dm@tssg.org"
+         },
+         json    : {
+            "alias": "dmc",
+            "username": "dm@tssg.org"
+         }
+      }
+
+      var actual = openi_cloudlet_api.processMongrel2Message(testInput);
+
+      test.equal(actual, null)
+
       test.done();
    }
 }
