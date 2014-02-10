@@ -25,7 +25,7 @@ module.exports = function(grunt) {
         },
         plato: {
             options: {
-                title: 'Data API',
+                title: 'Cloudlet API',
                 jshint: grunt.file.readJSON('.jshintrc')
             },
             metrics: {
