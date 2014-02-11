@@ -34,67 +34,66 @@ openi_cloudlet_api.init({
 
 exports['testProcessMongrel2'] = {
 
-   'create Cloudlet'   : function(test) {
+   'POST Object'   : function(test) {
       // tests here
       var testInput     = {
          uuid    : '123123',
          connId  : '345345345',
-         path    : '/api/v1/cloudlets',
+         path    : '/api/v1/cloudlets/123123123/abc',
          headers : {
             QUERY  : 'a=b&c=d',
             METHOD : 'POST'
          },
-         body    : {
-            "alias": "dmc",
-            "username": "dm@tssg.org"
-         },
+         body    : '{ "alias": "dmc", "username": "dm@tssg.org" }',
          json    : {
             "alias": "dmc",
             "username": "dm@tssg.org"
+            }
          }
-      }
+
 
       var actual = openi_cloudlet_api.processMongrel2Message(testInput);
 
-      test.equals(actual.action,                'CREATE',                                    "should be 'CREATE'"     )
-      test.equals(actual.object_data.alias,     'dmc',                                       "should be dmc"          )
-      test.equals(actual.object_data.username,  'dm@tssg.org',                               "should be dm@tssg.org"  )
-      test.equals(actual.mongrel_resp.value,    true,                                        "should be true"         )
-      test.equals(actual.clients[0].uuid,       '123123',                                    "should be 123123"       )
-      test.equals(actual.clients[0].connId,     '345345345',                                 "should be 345345345"    )
+      test.equals('POST',        actual.action,                "should be 'CREATE'"     )
+      test.equals('5248373c62dd03ff72407c602df06536-40', actual.object_name,     "should be dmc")
+      test.equals('dmc',         actual.object_data.alias,     "should be dmc"          )
+      test.equals('dm@tssg.org', actual.object_data.username,  "should be dm@tssg.org"  )
+      test.equals(true,          actual.mongrel_resp.value,    "should be true"         )
+      test.equals('123123',      actual.clients[0].uuid,       "should be 123123"       )
+      test.equals('345345345',   actual.clients[0].connId,     "should be 345345345"    )
       test.done();
    },
-   'delete Cloudlet'   : function(test) {
+   'PUT Object'   : function(test) {
       // tests here
       var testInput     = {
          uuid    : '123123',
          connId  : '345345345',
-         path    : '/api/v1/cloudlets/asdasdasdasdasd',
+         path    : '/api/v1/cloudlets/123123123/abc/ver1233',
          headers : {
             QUERY  : 'a=b&c=d',
-            METHOD : 'DELETE'
+            METHOD : 'PUT'
          },
-         body    : {
-            "alias": "dmc",
-            "username": "dm@tssg.org"
-         },
+         body    : '{ "alias": "dmccccc", "username": "dm@tssg.org" }',
          json    : {
-            "alias": "dmc",
-            "username": "dm@tssg.org"
+            'object' : {
+               "alias": "dmcccccc",
+               "username": "dm@tssg.org"
+            }
          }
       }
 
       var actual = openi_cloudlet_api.processMongrel2Message(testInput);
 
-      test.equals(actual.action,             'DELETE',                                    "should be 'DELETE'"        )
-      test.equals(actual.cloudlet,           'asdasdasdasdasd',                           "should be asdasdasdasdasd" )
-      test.deepEqual(actual.object_data,     {},                                          "should be empty object"    )
-      test.deepEqual(actual.mongrel_resp,    { value: true, cloudletId: 'asdasdasdasdasd' }, "should be { value: true, cloudletId: 'asdasdasdasdasd' }")
-      test.equals(actual.clients[0].uuid,    '123123',                                    "should be 123123"          )
-      test.equals(actual.clients[0].connId,  '345345345',                                 "should be 345345345"       )
+      test.equals('PUT',         actual.action,                "should be 'CREATE'"     )
+      test.equals('dmcccccc',    actual.object_data.alias,     "should be dmc"          )
+      test.equals('dm@tssg.org', actual.object_data.username,  "should be dm@tssg.org"  )
+      test.equals('ver1233',     actual.revision,              "should be ver1233"          )
+      test.equals(true,          actual.mongrel_resp.value,    "should be true"         )
+      test.equals('123123',      actual.clients[0].uuid,       "should be 123123"       )
+      test.equals('345345345',   actual.clients[0].connId,     "should be 345345345"    )
       test.done();
    },
-   'export Cloudlet'   : function(test) {
+   'GET OBject'   : function(test) {
       // tests here
       var testInput     = {
          uuid    : '123123',
@@ -114,14 +113,11 @@ exports['testProcessMongrel2'] = {
          }
       }
 
-
-
       var actual = openi_cloudlet_api.processMongrel2Message(testInput);
 
-      test.equals(actual.action,             'FETCH',                                     "should be 'FETCH'"      )
+      test.equals(actual.action,             'GET',                                       "should be 'FETCH'"      )
       test.equals(actual.cloudlet,           '234234234234',                              "should be 345345345"    )
-      test.deepEqual(actual.object_name,        {},                                          "should be Empty Object" )
-      test.deepEqual(actual.mongrel_resp,       { value: true, cloudletId: '234234234234' }, "should be { value: true, cloudletId: '234234234234' }")
+      test.deepEqual(actual.mongrel_resp,       { value: true }, "should be { value: true, cloudletId: '234234234234' }")
       test.equals(actual.clients[0].uuid,    '123123',                                    "should be 123123"       )
       test.equals(actual.clients[0].connId,  '345345345',                                 "should be 345345345"    )
       test.done();
