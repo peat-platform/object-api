@@ -54,8 +54,10 @@ exports['testProcessMongrel2'] = {
 
       var actual = openi_cloudlet_api.processMongrel2Message(testInput);
 
+      console.log(actual)
+
       test.equals('POST',        actual.action,                "should be 'CREATE'"     )
-      test.equals('5248373c62dd03ff72407c602df06536-40', actual.object_name,     "should be dmc")
+      test.equals('d41d8cd98f00b204e9800998ecf8427e-0', actual.object_name,     "should be dmc")
       test.equals('dmc',         actual.object_data.alias,     "should be dmc"          )
       test.equals('dm@tssg.org', actual.object_data.username,  "should be dm@tssg.org"  )
       test.equals(true,          actual.mongrel_resp.value,    "should be true"         )
@@ -75,10 +77,8 @@ exports['testProcessMongrel2'] = {
          },
          body    : '{ "alias": "dmccccc", "username": "dm@tssg.org" }',
          json    : {
-            'object' : {
                "alias": "dmcccccc",
                "username": "dm@tssg.org"
-            }
          }
       }
 
