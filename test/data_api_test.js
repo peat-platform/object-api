@@ -56,10 +56,10 @@ exports['testProcessMongrel2'] = {
 
       console.log(actual)
 
-      test.equals('POST',        actual.action,                "should be 'CREATE'"     )
-      test.equals('d41d8cd98f00b204e9800998ecf8427e-0', actual.object_name,     "should be dmc")
-      test.equals('dmc',         actual.object_data.alias,     "should be dmc"          )
-      test.equals('dm@tssg.org', actual.object_data.username,  "should be dm@tssg.org"  )
+      test.equals('POST',        actual.dao_actions[0].action,                "should be 'CREATE'"     )
+      test.equals('d41d8cd98f00b204e9800998ecf8427e-0', actual.dao_actions[0].object_name,     "should be dmc")
+      test.equals('dmc',         actual.dao_actions[0].object_data.alias,     "should be dmc"          )
+      test.equals('dm@tssg.org', actual.dao_actions[0].object_data.username,  "should be dm@tssg.org"  )
       test.equals(true,          actual.mongrel_resp.value,    "should be true"         )
       test.equals('123123',      actual.clients[0].uuid,       "should be 123123"       )
       test.equals('345345345',   actual.clients[0].connId,     "should be 345345345"    )
@@ -84,10 +84,10 @@ exports['testProcessMongrel2'] = {
 
       var actual = openi_cloudlet_api.processMongrel2Message(testInput);
 
-      test.equals('PUT',         actual.action,                "should be 'CREATE'"     )
-      test.equals('dmcccccc',    actual.object_data.alias,     "should be dmc"          )
-      test.equals('dm@tssg.org', actual.object_data.username,  "should be dm@tssg.org"  )
-      test.equals('ver1233',     actual.revision,              "should be ver1233"          )
+      test.equals('PUT',         actual.dao_actions[0].action,                "should be 'CREATE'"     )
+      test.equals('dmcccccc',    actual.dao_actions[0].object_data.alias,     "should be dmc"          )
+      test.equals('dm@tssg.org', actual.dao_actions[0].object_data.username,  "should be dm@tssg.org"  )
+      test.equals('ver1233',     actual.dao_actions[0].revision,              "should be ver1233"          )
       test.equals(true,          actual.mongrel_resp.value,    "should be true"         )
       test.equals('123123',      actual.clients[0].uuid,       "should be 123123"       )
       test.equals('345345345',   actual.clients[0].connId,     "should be 345345345"    )
@@ -115,8 +115,8 @@ exports['testProcessMongrel2'] = {
 
       var actual = openi_cloudlet_api.processMongrel2Message(testInput);
 
-      test.equals(actual.action,             'GET',                                       "should be 'FETCH'"      )
-      test.equals(actual.cloudlet,           '234234234234',                              "should be 345345345"    )
+      test.equals(actual.dao_actions[0].action,   'GET',                                       "should be 'FETCH'"      )
+      test.equals(actual.dao_actions[0].database,                '234234234234',                              "should be 345345345"    )
       test.deepEqual(actual.mongrel_resp,       { value: true }, "should be { value: true, cloudletId: '234234234234' }")
       test.equals(actual.clients[0].uuid,    '123123',                                    "should be 123123"       )
       test.equals(actual.clients[0].connId,  '345345345',                                 "should be 345345345"    )
