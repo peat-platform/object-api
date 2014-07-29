@@ -28,6 +28,7 @@
       "test": "grunt nodeunit"
    },
    "dependencies": {
+      "http"                   : "",
       "m2nodehandler"          : "OPENi-ict/m2nodehandler",
       "dbc"                    : "OPENi-ict/dbc",
       "openi-logger"           : "OPENi-ict/openi-logger",
