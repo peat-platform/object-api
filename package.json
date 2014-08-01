@@ -28,6 +28,7 @@
       "test": "grunt nodeunit"
    },
    "dependencies": {
+      "validator"                 : "",
       "moment"                 : "",
       "http"                   : "",
       "m2nodehandler"          : "OPENi-ict/m2nodehandler",
