@@ -28,7 +28,9 @@
       "test": "grunt nodeunit"
    },
    "dependencies": {
-      "validator"                 : "",
+      "elasticsearch"          : "^2.3.0",
+      "underscore"             : "^1.6.0",
+      "validator"              : "",
       "moment"                 : "",
       "http"                   : "",
       "m2nodehandler"          : "OPENi-ict/m2nodehandler",
