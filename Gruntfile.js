@@ -2,9 +2,9 @@
 
 module.exports = function(grunt) {
 
-    var tests       = 'test/**/*_test.js'
-    var build_tests = 'build/instrument/' + tests
-    var lib         = 'lib/**/*.js'
+    var tests       = 'test/**/*_test.js';
+    var build_tests = 'build/instrument/' + tests;
+    var lib         = 'lib/**/*.js';
 
 
     grunt.initConfig({
@@ -99,7 +99,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-config');
 
   // Default task(s).
-  grunt.registerTask('test',     ['nodeunit']);
+  grunt.registerTask('test',     ['jshint']);
   grunt.registerTask('cover',    ['clean:build', 'instrument', 'nodeunit', 'storeCoverage', 'makeReport']);
   grunt.registerTask('default',  ['required',    'jshint',     'nodeunit' ]);
   grunt.registerTask('jenkins',  ['jshint',      'cover',      'coverage',    'plato']);
