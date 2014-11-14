@@ -19,15 +19,16 @@
     "test": "grunt nodeunit"
   },
   "dependencies": {
-    "elasticsearch": "^2.3.0",
-    "underscore": "^1.6.0",
-    "validator": "",
-    "moment": "",
-    "http": "",
-    "m2nodehandler": "OPENi-ict/m2nodehandler",
     "dbc": "OPENi-ict/dbc",
+    "elasticsearch": "^2.3.0",
+    "http": "",
+    "loglet": "git://github.com/OPENi-ict/loglet",
+    "m2nodehandler": "OPENi-ict/m2nodehandler",
+    "moment": "",
+    "openi-cloudlet-utils": "OPENi-ict/cloudlet-utils",
     "openi-logger": "OPENi-ict/openi-logger",
-    "openi-cloudlet-utils": "OPENi-ict/cloudlet-utils"
+    "underscore": "^1.6.0",
+    "validator": ""
   },
   "keywords": [],
   "devDependencies": {
