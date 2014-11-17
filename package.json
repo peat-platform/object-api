@@ -22,14 +22,14 @@
     "dbc": "OPENi-ict/dbc",
     "elasticsearch": "^2.3.0",
     "http": "",
+    "jsonwebtoken": "",
     "loglet": "git://github.com/OPENi-ict/loglet",
     "m2nodehandler": "OPENi-ict/m2nodehandler",
     "moment": "",
     "openi-cloudlet-utils": "OPENi-ict/cloudlet-utils",
     "openi-logger": "OPENi-ict/openi-logger",
     "underscore": "^1.6.0",
-    "validator": "",
-    "jsonwebtoken"           : ""
+    "validator": ""
   },
   "keywords": [],
   "devDependencies": {
