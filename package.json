@@ -30,7 +30,7 @@
     "openi-cloudlet-utils": "OPENi-ict/cloudlet-utils",
     "openi-logger": "OPENi-ict/openi-logger",
     "openi_rrd": "OPENi-ict/openi_rrd",
-    "tracklet": "ssh://git@github.com:OPENi-ict/tracklet",
+    "tracklet": "OPENi-ict/tracklet",
     "underscore": "^1.6.0",
     "validator": ""
   },
