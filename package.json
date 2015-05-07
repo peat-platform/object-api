@@ -1,15 +1,15 @@
 {
   "name": "object_api",
-  "description": "Object API for the OPENi Cloudlet Platform",
+  "description": "Object API for the PEAT Cloudlet Platform",
   "version": "0.1.0",
-  "homepage": "openi-ict.eu",
+  "homepage": "peat-platform.org",
   "author": {
     "name": "dmccarthy",
     "email": "dmccarthy@tssg.org"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:OPENi-ict/object-api.git"
+    "url": "git@github.com:peat-platform/object-api.git"
   },
   "main": "lib/main",
   "engines": {
@@ -21,18 +21,18 @@
   "dependencies": {
     "async": "^0.9.0",
     "couchbase": "^2.0.6",
-    "dbc": "OPENi-ict/dbc",
+    "dbc": "peat-platform/dbc",
     "elasticsearch": "^2.3.0",
     "http": "",
     "jsonwebtoken": "3.2.0",
     "lodash": "^3.5.0",
-    "loglet": "git://github.com/OPENi-ict/loglet",
-    "m2nodehandler": "OPENi-ict/m2nodehandler",
+    "loglet": "git://github.com/peat-platform/loglet",
+    "m2nodehandler": "peat-platform/m2nodehandler",
     "moment": "",
-    "openi-cloudlet-utils": "OPENi-ict/cloudlet-utils",
-    "openi-logger": "OPENi-ict/openi-logger",
-    "openi_rrd": "OPENi-ict/openi_rrd",
-    "tracklet": "OPENi-ict/tracklet",
+    "openi-cloudlet-utils": "peat-platform/cloudlet-utils",
+    "openi-logger": "peat-platform/openi-logger",
+    "openi_rrd": "peat-platform/openi_rrd",
+    "tracklet": "peat-platform/tracklet",
     "underscore": "^1.6.0",
     "validator": ""
   },
