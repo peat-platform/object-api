@@ -3,7 +3,7 @@
 The Cloudlet Platforms cloudlet_api component manages users Cloudlet Platform. It supports create, delete, and read of Cloudlets.
 
 ## Getting Started
-Install the module with: `npm install git+ssh://git@gitlab.openi-ict.eu:cloudlet_api.git`
+Install the module with: `npm install git+ssh://git@gitlab.peat-platform.org:cloudlet_api.git`
 
 You will need to install the following through macports or aptitude.
 
@@ -22,7 +22,7 @@ sudo apt-get install phantomjs
 To build the project enter the following commands. Note: npm install is only required the first time the module is built or if a new dependency is added. There are a number of grunt tasks that can be executed including: test, cover, default and jenkins. The jenkins task is executed on the build server, if it doesn't pass then the build will fail.
 
 ```bash
-git clone git@gitlab.openi-ict.eu:cloudlet_api.git
+git clone git@gitlab.peat-platform.org:cloudlet_api.git
 cd cloudlet_api
 npm install
 grunt jenkins
