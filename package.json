@@ -34,7 +34,8 @@
     "peat-rrd": "peat-platform/peat-rrd",
     "tracklet": "peat-platform/tracklet",
     "underscore": "^1.6.0",
-    "validator": ""
+    "validator": "",
+    "squel": ""
   },
   "keywords": [],
   "devDependencies": {

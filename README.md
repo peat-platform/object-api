@@ -36,7 +36,7 @@ node lib/local-runner.js
 
 ## Documentation
 
-API documentation can be found on the OPENi website (http://dev.openi-ict.eu/api-docs/#!/cloudlets).
+API documentation can be found on the PEAT website (http://dev.peat-platform.org/api-docs/#!/cloudlets).
 
 
 ## Contributors
