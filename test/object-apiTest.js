@@ -10,7 +10,6 @@ var assert = require('chai').assert;
 
 var mockSender = function(cd){
    return{"send" : function(){
-      //console.log(arguments);
       cd.apply(this,arguments);
    }}
 };
@@ -48,7 +47,6 @@ describe('Test Main',function(){
          objectAPI(config);
       } catch(e){
          console.log(e);
-         //assert(undefined,e, "No Error Should be Thrown");
       }
    });
    it('should throe error with bad config', function () {
@@ -128,6 +126,23 @@ describe('Test Helper',function(){
       },
       token : authToken
    };
+   var validPUTInput     = {
+      uuid    : '123123',
+      connId  : '345345345',
+      path    : 'c_897b0ef002da79321dcb0d681cb473d0/0b1d1210-283c-407d-87d9-b88cf218379a',
+      headers : {
+         QUERY  : 'a=b&c=d',
+         METHOD : 'PUT',
+         URI    : 'c_897b0ef002da79321dcb0d681cb473d0/0b1d1210-283c-407d-87d9-b88cf218379a'
+      },
+      body    : '{ "alias": "dmc", "username": "dm@tssg.org" }',
+      json    : {
+         "alias": "dmc",
+         "username": "dm@tssg.org"
+      },
+      token : authToken
+   };
+
 
    it('should return 400 status for Invalid format POST', function () {
       var cb = function(uuid,connid,status,headers,data){
@@ -143,11 +158,21 @@ describe('Test Helper',function(){
    it('should return 400 status for Invalid format GET', function () {
       var cb = function(uuid,connid,status,headers,data){
          assert(400,status,"Status should be 400");
-         console.log(JSON.stringify(data));
          assert('Invalid Cloudlet id',data['error'],"Error should be 'Invalid Cloudlet id'")
       };
       try {
          helper.processMongrel2Message(testGETInput, null, mockSender(cb), null);
+      }catch(e){
+         assert.isNull(e,"Should not throw Error");
+      }
+   });
+   it('should return 400 status for Invalid format PUT', function () {
+      var cb = function(uuid,connid,status,headers,data){
+         assert(400,status,"Status should be 400");
+         assert('Invalid Cloudlet id',data['error'],"Error should be 'Invalid Cloudlet id'")
+      };
+      try {
+         helper.processMongrel2Message(validPUTInput, null, mockSender(cb), null);
       }catch(e){
          assert.isNull(e,"Should not throw Error");
       }
