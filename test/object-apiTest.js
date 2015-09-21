@@ -134,6 +134,22 @@ describe('Test Helper',function(){
       },
       token : authToken
    };
+   var validGETInput_Filter     = {
+      uuid    : '123123',
+      connId  : '345345345',
+      path    : '/api/v1/objects/c_897b0ef002da79321dcb0d681cb473d0',
+      headers : {
+         QUERY  : 'type=t_5d94e8484c8d18aa243fc210a0fc395a-1334&alltypes=true&alltypescloudlet=true&with_property=address&only_show_properties=yes,no&property_filter=address=1||2,name=*,a = true',
+         METHOD : 'GET',
+         URI    : '/api/v1/cloudlets/c_897b0ef002da79321dcb0d681cb473d0?type=t_5d94e8484c8d18aa243fc210a0fc395a-1334&alltypes=true&alltypescloudlet=true&with_property=address&only_show_properties=yes,no&property_filter=address=1||2,name=*,a = true'
+      },
+      body    : '{ "alias": "dmc", "username": "dm@tssg.org" }',
+      json    : {
+         "alias": "dmc",
+         "username": "dm@tssg.org"
+      },
+      token : sessionToken
+   };
 
    var testPOSTInput     = {
       uuid    : '123123',
@@ -274,8 +290,8 @@ describe('Test Helper',function(){
    it('should return daoActions for GET object', function () {
       var cb = function(data){
          assert.isNotNull(data,"data should not be null");
-         assert('GET',data.dao_actions.action, "Action should be 'GET'");
-         assert('objects',data.dao_actions.bucket, "bucket should be 'objects'");
+         assert(data.dao_actions[0]['action'].indexOf("GET") != -1, "Action should be 'GET'");
+         assert(data.dao_actions[0]['bucket'].indexOf("objects")!= -1, "bucket should be 'objects'");
          //assert('Invalid Cloudlet id',data['error'],"Error should be 'Invalid Cloudlet id'")
       };
       try {
@@ -284,11 +300,13 @@ describe('Test Helper',function(){
          assert.isNull(e,"Should not throw Error");
       }
    });
-   it('should return daoActions for GET objects', function () {
+   it('should return daoActions for GET Cloudlet objects', function () {
       var cb = function(data){
+         console.log(data)
          assert.isNotNull(data,"data should not be null");
-         assert('GET',data.dao_actions.action, "Action should be 'GET'");
-         assert('objects',data.dao_actions.bucket, "bucket should be 'objects'");
+         assert(data.dao_actions[0]['action'].indexOf("VIEW") != -1, "Action should be 'VIEW'");
+         assert(data.dao_actions[0]['view_name'].indexOf("object_by_cloudlet_id") != -1, "View Should be 'object_by_cloudlet_id'");
+         assert(data.dao_actions[0]['bucket'].indexOf("objects")!= -1, "bucket should be 'objects'");
       };
       try {
          helper.processMongrel2Message(validGETObjsInput, mockSender(cb), mockSender(cb), null);
@@ -298,10 +316,9 @@ describe('Test Helper',function(){
    });
    it('should return daoActions for GET objects with Query', function () {
       var cb = function(data){
-         console.log(data);
          assert.isNotNull(data,"data should not be null");
-         assert('GET',data.dao_actions.action, "Action should be 'GET'");
-         assert('objects',data.dao_actions.bucket, "bucket should be 'objects'");
+         assert(data.dao_actions[0]['action'].indexOf("VIEW") != -1, "Action should be 'VIEW'");
+         assert(data.dao_actions[0]['bucket'].indexOf("objects")!= -1, "bucket should be 'objects'");
       };
       try {
          helper.processMongrel2Message(validGETInput_Query, mockSender(cb), mockSender(cb), null);
@@ -309,10 +326,23 @@ describe('Test Helper',function(){
          assert.isNull(e,"Should not throw Error");
       }
    });
+   it('should return daoActions for GET objects with Filter', function () {
+      var cb = function(data){
+         //console.log(data.dao_actions[0]);
+         assert.isNotNull(data,"data should not be null");
+         assert(data.dao_actions[0]['action'].indexOf("QUERY") != -1, "Action should be 'QUERY'");
+         assert(data.dao_actions[0]['bucket'].indexOf('objects') != -1, "bucket should be 'objects'");
+      };
+      try {
+         helper.processMongrel2Message(validGETInput_Filter, mockSender(cb), mockSender(cb), null);
+      }catch(e){
+         assert.isNull(e,"Should not throw Error");
+      }
+   });
    it('should return daoActions for POST object', function () {
       var cb = function(data){
          console.log(data);
-         assert.isNotNull(data,"data should not be null");
+         //assert.isNotNull(data,"data should not be null");
          assert('GET',data.dao_actions.action, "Action should be 'GET'");
          assert('objects',data.dao_actions.bucket, "bucket should be 'objects'");
       };
