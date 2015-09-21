@@ -276,7 +276,6 @@ describe('Test Helper',function(){
    it('should return 400 status for Invalid format PUT', function () {
       var cb = function(uuid,connid,status,headers,data){
          assert(400,status,"Status should be 400");
-         console.log(data.error)
          assert(data.error.indexOf('Invalid format') >= 0,"Error should be 'Invalid format'")
       };
       try {
@@ -302,7 +301,6 @@ describe('Test Helper',function(){
    });
    it('should return daoActions for GET Cloudlet objects', function () {
       var cb = function(data){
-         console.log(data)
          assert.isNotNull(data,"data should not be null");
          assert(data.dao_actions[0]['action'].indexOf("VIEW") != -1, "Action should be 'VIEW'");
          assert(data.dao_actions[0]['view_name'].indexOf("object_by_cloudlet_id") != -1, "View Should be 'object_by_cloudlet_id'");
@@ -328,7 +326,6 @@ describe('Test Helper',function(){
    });
    it('should return daoActions for GET objects with Filter', function () {
       var cb = function(data){
-         //console.log(data.dao_actions[0]);
          assert.isNotNull(data,"data should not be null");
          assert(data.dao_actions[0]['action'].indexOf("QUERY") != -1, "Action should be 'QUERY'");
          assert(data.dao_actions[0]['bucket'].indexOf('objects') != -1, "bucket should be 'objects'");
@@ -339,12 +336,10 @@ describe('Test Helper',function(){
          assert.isNull(e,"Should not throw Error");
       }
    });
-   it('should return daoActions for POST object', function () {
-      var cb = function(data){
-         console.log(data);
-         //assert.isNotNull(data,"data should not be null");
-         assert('GET',data.dao_actions.action, "Action should be 'GET'");
-         assert('objects',data.dao_actions.bucket, "bucket should be 'objects'");
+   it('should return 400 for POST object as validator urn not accessible', function () {
+      var cb = function(uuid,connid,status,headers,data){
+         assert(400,status,"Status should be 400");
+         assert(data.error.indexOf('timeout') >= 0,"Error should be 'Invalid format'")
       };
       try {
          helper.processMongrel2Message(validPOSTInput, mockSender(cb), mockSender(cb), null);
@@ -355,8 +350,8 @@ describe('Test Helper',function(){
    it('should return daoActions for DELETE object', function () {
       var cb = function(data){
          assert.isNotNull(data,"data should not be null");
-         assert('GET',data.dao_actions.action, "Action should be 'GET'");
-         assert('objects',data.dao_actions.bucket, "bucket should be 'objects'");
+         assert(data.dao_actions[0]['action'].indexOf('DELETE') != -1, "Action should be 'DELETE'");
+         assert(data.dao_actions[0]['bucket'].indexOf('objects') != -1, "bucket should be 'objects'");
       };
       try {
          helper.processMongrel2Message(validDELETEInput, mockSender(cb), mockSender(cb), null);

@@ -21,18 +21,17 @@
   "dependencies": {
     "async": "^0.9.0",
     "couchbase": "^2.0.6",
-    "dbc": "peat-platform/dbc",
+    "dbc": "git://github.com/peat-platform/dbc#develop",
     "elasticsearch": "^2.3.0",
     "http": "",
     "jsonwebtoken": "3.2.0",
     "lodash": "^3.5.0",
-    "loglet": "git://github.com/peat-platform/loglet",
-    "m2nodehandler": "peat-platform/m2nodehandler",
+    "loglet": "git://github.com/peat-platform/loglet#develop",
+    "m2nodehandler": "git://github.com/peat-platform/m2nodehandler#develop",
     "moment": "",
-    "cloudlet-utils": "peat-platform/cloudlet-utils",
-    "peat-logger": "peat-platform/peat-logger",
-    "peat-rrd": "peat-platform/peat-rrd",
-    "tracklet": "peat-platform/tracklet",
+    "cloudlet-utils": "git://github.com/peat-platform/cloudlet-utils#develop",
+    "peat-logger": "git://github.com/peat-platform/peat-logger#develop",
+    "tracklet": "git://github.com/peat-platform/tracklet#develop",
     "underscore": "^1.6.0",
     "validator": "",
     "squel": ""
@@ -41,6 +40,7 @@
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-contrib-jshint": "^0.6.5",
-    "jshint-stylish": "^1.0.0"
+    "jshint-stylish": "^1.0.0",
+    "chai" : "3.1.0"
   }
 }
